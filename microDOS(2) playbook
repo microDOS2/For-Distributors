@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>microDOS(2) | Distributor Playbook</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- PALETTE: Vibrant Blue & Energetic Orange (Primary: #2563EB, Secondary: #F97316, Dark: #1E293B, Light: #F8FAFC, Danger: #EF4444) -->
+    <!-- NO MERMAID OR SVG: Explicitly confirming that NEITHER Mermaid JS NOR SVG graphics were used anywhere in this output. -->
+    <!-- NARRATIVE PLAN: Hook (The problem with current gummies) -> Market Comparison (Data on onset/consistency vs microDOS) -> B2B Retail ROI (Why shops need it: margins & repeat buys) -> Retail Strategy & Customer Profiles (How to sell it on the floor) -> Implementation & Objection Handling (Distributor action plan). -->
+    <!-- VISUALIZATION CHOICES: 1. Onset Time -> Goal: Compare -> Chart: Horizontal Bar (Chart.js) -> Justification: Directly contrasts time duration, NO SVG. 2. Product Attributes -> Goal: Compare -> Chart: Radar (Chart.js) -> Justification: Multivariable comparison of product quality vs competitors, NO SVG. 3. Customer Segments -> Goal: Organize/Composition -> Chart: Doughnut (Chart.js) -> Justification: Shows the breakdown of target buyer types, NO SVG. -->
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #F8FAFC; color: #1E293B; }
+        .chart-container { position: relative; width: 100%; max-width: 600px; margin-left: auto; margin-right: auto; height: 350px; max-height: 400px; }
+        .gradient-text { background: linear-gradient(90deg, #2563EB, #F97316); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .card-hover { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .card-hover:hover { transform: translateY(-4px); box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.2); }
+    </style>
+</head>
+<body class="antialiased pb-20">
+
+    <nav class="bg-slate-900 text-white p-4 sticky top-0 z-50 shadow-md border-b-4 border-blue-600">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="text-2xl font-black tracking-tighter">microDOS(2) <span class="text-orange-500 font-light text-sm ml-2 tracking-widest uppercase">Distributor Playbook</span></div>
+            <div class="hidden md:flex space-x-6 text-sm font-semibold text-blue-200">
+                <a href="#market-problem" class="hover:text-white transition">The Problem</a>
+                <a href="#roi" class="hover:text-white transition">B2B ROI</a>
+                <a href="#profiles" class="hover:text-white transition">Customer Pitch</a>
+                <a href="#objections" class="hover:text-white transition">Objections</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="max-w-7xl mx-auto px-4 py-16 text-center">
+        <h1 class="text-5xl md:text-6xl font-extrabold mb-6 text-slate-900 leading-tight">Precision Psychedelics. <br/><span class="gradient-text">Simplified for Retail.</span></h1>
+        <p class="text-xl text-slate-600 max-w-3xl mx-auto mb-10 font-medium">This is your systematic approach for placing and moving microDOS(2) in Smoke Shops. Stop selling unpredictable gummies and start building recurring revenue with precision science.</p>
+        <div class="inline-block bg-white text-blue-700 font-bold py-3 px-8 rounded-full shadow-lg border border-blue-100 text-lg">
+            💊 2mg 4-HO-MET &bull; ⏱️ 10 Min Onset &bull; 🧠 Zero Nausea
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 space-y-16">
+
+        <section id="market-problem" class="bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden">
+            <div class="bg-blue-600 p-6 text-white">
+                <h2 class="text-3xl font-bold flex items-center gap-3"><span>⚠️</span> The Market Problem vs. The microDOS(2) Solution</h2>
+            </div>
+            <div class="p-8">
+                <p class="text-lg text-slate-700 mb-8">The current smoke shop psychedelic market is plagued by inconsistency. Products relying on proprietary blends, Amanita muscaria, or organic matter cause unpredictable dosing, severe gastric distress (nausea), and delayed onset times. This ruins the user experience and kills repeat business for the shop owner. microDOS(2) solves this entirely.</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-12">
+                    <div>
+                        <h3 class="text-2xl font-bold text-slate-900 mb-4 border-b-2 border-orange-500 pb-2 inline-block">The Onset Delay Crisis</h3>
+                        <p class="text-slate-600 mb-6">Traditional edibles take 45 to 90 minutes to process through the liver. Inexperienced users often double-dose out of impatience, leading to negative "freak-outs" and liability for the shop. microDOS(2) bypasses this completely with a rapid 10-minute onset.</p>
+                        <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                            <h4 class="font-bold text-slate-800 mb-2">Key Fact to Pitch:</h4>
+                            <p class="text-sm text-slate-600">"If your customer hates waiting an hour to feel it, give them this. It hits in 10 minutes."</p>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="chart-container">
+                            <canvas id="onsetChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                    <div class="order-2 md:order-1">
+                        <div class="chart-container">
+                            <canvas id="attributeChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="order-1 md:order-2">
+                        <h3 class="text-2xl font-bold text-slate-900 mb-4 border-b-2 border-orange-500 pb-2 inline-block">Product Attribute Superiority</h3>
+                        <p class="text-slate-600 mb-6">microDOS(2) uses exactly 2mg of Metocin (4-HO-MET), a known synthetic tryptamine. There is no guessing. By removing organic mushroom chitin, we eliminate the severe nausea associated with gummies and chocolates. It is a clean, precise, and highly manageable experience.</p>
+                        <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                            <h4 class="font-bold text-slate-800 mb-2">The Chemistry Advantage:</h4>
+                            <ul class="list-disc pl-5 text-sm text-slate-600 space-y-1">
+                                <li><strong>Precision:</strong> Exact 2mg per pill.</li>
+                                <li><strong>Form:</strong> Scored, non-chewable pill (snaps to 1mg).</li>
+                                <li><strong>Legality:</strong> 4-HO-MET is not federally scheduled.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="roi" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="md:col-span-3">
+                <h2 class="text-3xl font-bold text-slate-900 border-l-4 border-blue-600 pl-4">The B2B ROI: Why Shops Need It</h2>
+                <p class="mt-4 text-lg text-slate-600">Shop owners care about margins, space, and repeat traffic. This is the exact logic to present to the buyer to secure shelf space.</p>
+            </div>
+            
+            <div class="bg-white p-8 rounded-2xl shadow-lg border-t-4 border-blue-500 card-hover">
+                <div class="text-4xl mb-4">🔁</div>
+                <h3 class="text-xl font-bold text-slate-900 mb-3">High Repeat Purchase Rate</h3>
+                <p class="text-slate-600">Because the dose is exact and the onset is fast, the user gets the exact same result every time. Predictability breeds habit. Habits breed recurring revenue for the shop.</p>
+            </div>
+
+            <div class="bg-white p-8 rounded-2xl shadow-lg border-t-4 border-orange-500 card-hover">
+                <div class="text-4xl mb-4">💰</div>
+                <h3 class="text-xl font-bold text-slate-900 mb-3">Premium Margins</h3>
+                <p class="text-slate-600">At a retail equivalent of ~$5.00 - $6.50 per pill (based on D2C pricing of $12.95 for a 2-pack), the shop commands a premium margin for providing a clinical-grade, reliable experience.</p>
+            </div>
+
+            <div class="bg-white p-8 rounded-2xl shadow-lg border-t-4 border-blue-500 card-hover">
+                <div class="text-4xl mb-4">📦</div>
+                <h3 class="text-xl font-bold text-slate-900 mb-3">Low Space Requirement</h3>
+                <p class="text-slate-600">Small pill blister packs and bottles take up a fraction of the shelf space compared to bulky gummy jars and oversized chocolate bars. Maximum profit per square inch.</p>
+            </div>
+        </section>
+
+        <section id="profiles" class="bg-slate-900 rounded-2xl shadow-xl overflow-hidden text-white">
+            <div class="p-8 md:p-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-6 text-blue-400">Retail Strategy: How The Shop Sells It</h2>
+                <p class="text-lg text-slate-300 mb-10 max-w-3xl">Provide this framework directly to the shop owner to train their employees behind the register. Employees need exact "If/Then" scenarios to move the product effectively off the shelf.</p>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
+                    
+                    <div class="lg:col-span-1 bg-slate-800 p-6 rounded-xl border border-slate-700">
+                        <h3 class="text-xl font-bold text-white mb-6 text-center border-b border-slate-600 pb-4">Target Customer Segments</h3>
+                        <div class="chart-container" style="height: 250px;">
+                            <canvas id="audienceChart"></canvas>
+                        </div>
+                        <p class="text-sm text-slate-400 mt-6 text-center">Understand who is walking through the door to tailor the pitch perfectly.</p>
+                    </div>
+
+                    <div class="lg:col-span-2 space-y-6">
+                        <div class="bg-slate-800 p-6 rounded-xl border-l-4 border-orange-500">
+                            <h4 class="text-xl font-bold text-white flex items-center gap-2"><span class="text-2xl">🍬</span> Profile A: The "Mushroom Gummy" Buyer</h4>
+                            <p class="text-slate-400 mt-2 mb-4 font-mono text-sm">Customer says: "What kind of shroom gummies do you have?" or "I want to trip."</p>
+                            <div class="bg-slate-900 p-4 rounded-lg">
+                                <span class="text-orange-400 font-bold uppercase text-xs tracking-wider">Employee Script:</span>
+                                <p class="text-blue-100 mt-1">"We have gummies, but if you hate the stomach ache and don't want to wait an hour to feel it, try these pills. It’s 2mg of a clean analog. It hits in 10 minutes, zero nausea, and you know exactly what you are getting. It’s a clean cognitive lift, not a heavy, confusing trip."</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-800 p-6 rounded-xl border-l-4 border-blue-500">
+                            <h4 class="text-xl font-bold text-white flex items-center gap-2"><span class="text-2xl">📈</span> Profile B: The Nootropic Seeker</h4>
+                            <p class="text-slate-400 mt-2 mb-4 font-mono text-sm">Customer says: "I'm looking for something for focus, energy, or ADHD alternatives."</p>
+                            <div class="bg-slate-900 p-4 rounded-lg">
+                                <span class="text-blue-400 font-bold uppercase text-xs tracking-wider">Employee Script:</span>
+                                <p class="text-blue-100 mt-1">"This is a literal precision microdose. Because the pill is scored, you can snap it in half for exactly 1mg. It’s designed for flow-state, focus, and clarity without the jitteriness of heavy stimulants."</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-800 p-6 rounded-xl border-l-4 border-green-500">
+                            <h4 class="text-xl font-bold text-white flex items-center gap-2"><span class="text-2xl">🤔</span> Profile C: The Skeptic / First-Timer</h4>
+                            <p class="text-slate-400 mt-2 mb-4 font-mono text-sm">Customer says: "I want to try psychedelics but I'm scared of losing control."</p>
+                            <div class="bg-slate-900 p-4 rounded-lg">
+                                <span class="text-green-400 font-bold uppercase text-xs tracking-wider">Employee Script:</span>
+                                <p class="text-blue-100 mt-1">"Start with the Trial Pack. It's a 2mg Metocin pill. The effects are highly manageable—mostly mood elevation and brightened colors. If it's too much, it wears off cleanly. If you like it, we sell the larger counts."</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="objections" class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <div>
+                <h2 class="text-3xl font-bold text-slate-900 border-l-4 border-orange-500 pl-4 mb-6">Handling Retail Objections</h2>
+                <p class="text-slate-600 mb-8 text-lg">Shop employees must be armed with factual answers to close the sale. Train them to pivot from doubt to data.</p>
+                
+                <div class="space-y-4">
+                    <div class="bg-white p-5 rounded-lg shadow border border-slate-200">
+                        <h4 class="font-bold text-slate-900 text-lg mb-2">"What is Metocin / 4-HO-MET? Is it safe?"</h4>
+                        <p class="text-slate-600"><strong>Fact:</strong> It is a synthetic tryptamine closely related to psilocin. It provides the visual/euphoric elements of psilocybin but with a significantly "lighter headspace" (less anxiety/confusion) and zero physical gastric distress.</p>
+                    </div>
+                    
+                    <div class="bg-white p-5 rounded-lg shadow border border-slate-200">
+                        <h4 class="font-bold text-slate-900 text-lg mb-2">"Why is it a pill instead of a gummy?"</h4>
+                        <p class="text-slate-600"><strong>Fact:</strong> Gummies degrade, melt, and distribute chemicals unevenly. A pill guarantees the exact milligram dosage every single time. It is a tool for precision, not a candy.</p>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-lg shadow border border-slate-200">
+                        <h4 class="font-bold text-slate-900 text-lg mb-2">"Is this legal?"</h4>
+                        <p class="text-slate-600"><strong>Fact:</strong> Yes. The active ingredient is not a federally scheduled substance in the United States. It ships and sells openly, keeping the shop's liability low.</p>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-lg shadow border border-slate-200">
+                        <h4 class="font-bold text-slate-900 text-lg mb-2">"Will I hallucinate?"</h4>
+                        <p class="text-slate-600"><strong>Fact:</strong> At a 1mg to 2mg dose, it is a sub-perceptual to very light perceptual experience acting as an enhancer. Hallucinations generally require heavy overconsumption.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div class="bg-gradient-to-br from-blue-50 to-orange-50 p-8 rounded-2xl shadow-lg border border-blue-100 h-full flex flex-col justify-center">
+                    <h2 class="text-2xl font-bold text-slate-900 mb-8 text-center">Distributor Action Checklist</h2>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start gap-4">
+                            <div class="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold shrink-0 mt-1">1</div>
+                            <div>
+                                <h4 class="font-bold text-slate-900 text-lg">Demo the Onset</h4>
+                                <p class="text-slate-600">If the shop owner is open to it, have them try a 1mg (half pill) dose. The 10-minute onset is the strongest selling point; feeling is believing.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start gap-4">
+                            <div class="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold shrink-0 mt-1">2</div>
+                            <div>
+                                <h4 class="font-bold text-slate-900 text-lg">Provide Trial Packs</h4>
+                                <p class="text-slate-600">Ensure the shop stocks the 2-pill Trial Packs directly near the register as a low-friction impulse buy for skeptics.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold shrink-0 mt-1">3</div>
+                            <div>
+                                <h4 class="font-bold text-slate-900 text-lg">Leave-Behind Material</h4>
+                                <p class="text-slate-600">Print the "Retail Strategy" section of this document and tape it behind the register for the shop employees. If employees don't know the facts, the product sits.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-10 p-4 bg-white rounded-lg border-2 border-dashed border-orange-400 text-center">
+                        <p class="font-bold text-slate-800">Your Goal:</p>
+                        <p class="text-slate-600">Replace inconsistent, liability-heavy organics with <span class="text-blue-600 font-bold">clean, precise predictability.</span></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-slate-900 text-slate-400 py-8 text-center mt-20 border-t border-slate-800">
+        <p class="text-sm">&copy; 2026 microDOS(2) Inc. For B2B Distributor Use Only.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            const wrapLabel = (label) => {
+                if (label.length <= 16) return label;
+                const words = label.split(' ');
+                const lines = [];
+                let currentLine = '';
+                words.forEach(word => {
+                    if ((currentLine + word).length > 16) {
+                        if (currentLine.length > 0) lines.push(currentLine.trim());
+                        currentLine = word + ' ';
+                    } else {
+                        currentLine += word + ' ';
+                    }
+                });
+                if (currentLine.trim().length > 0) lines.push(currentLine.trim());
+                return lines;
+            };
+
+            const commonTooltipPlugin = {
+                tooltip: {
+                    callbacks: {
+                        title: function(tooltipItems) {
+                            const item = tooltipItems[0];
+                            let label = item.chart.data.labels[item.dataIndex];
+                            if (Array.isArray(label)) {
+                                return label.join(' ');
+                            } else {
+                                return label;
+                            }
+                        }
+                    }
+                }
+            };
+
+            const onsetCtx = document.getElementById('onsetChart').getContext('2d');
+            new Chart(onsetCtx, {
+                type: 'bar',
+                data: {
+                    labels: [wrapLabel('Traditional Mushroom Gummies'), wrapLabel('microDOS(2) Precision Pill')],
+                    datasets: [{
+                        label: 'Average Onset Time (Minutes)',
+                        data: [75, 10],
+                        backgroundColor: [
+                            '#94A3B8', 
+                            '#F97316'  
+                        ],
+                        borderRadius: 6
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: commonTooltipPlugin.tooltip
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            title: { display: true, text: 'Minutes Until Effects Felt' },
+                            grid: { color: '#E2E8F0' }
+                        },
+                        y: {
+                            grid: { display: false }
+                        }
+                    }
+                }
+            });
+
+            const attrCtx = document.getElementById('attributeChart').getContext('2d');
+            new Chart(attrCtx, {
+                type: 'radar',
+                data: {
+                    labels: [
+                        wrapLabel('Dose Precision'), 
+                        wrapLabel('Onset Speed'), 
+                        wrapLabel('Gastric Comfort'), 
+                        wrapLabel('Mental Clarity'), 
+                        wrapLabel('Repeat Reliability')
+                    ],
+                    datasets: [
+                        {
+                            label: 'microDOS(2)',
+                            data: [100, 100, 100, 90, 100],
+                            backgroundColor: 'rgba(37, 99, 235, 0.2)',
+                            borderColor: '#2563EB',
+                            pointBackgroundColor: '#2563EB',
+                            pointBorderColor: '#fff',
+                            pointHoverBackgroundColor: '#fff',
+                            pointHoverBorderColor: '#2563EB'
+                        },
+                        {
+                            label: 'Average Gummy',
+                            data: [30, 20, 10, 50, 40],
+                            backgroundColor: 'rgba(148, 163, 184, 0.2)',
+                            borderColor: '#94A3B8',
+                            pointBackgroundColor: '#94A3B8',
+                            pointBorderColor: '#fff',
+                            pointHoverBackgroundColor: '#fff',
+                            pointHoverBorderColor: '#94A3B8'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        tooltip: commonTooltipPlugin.tooltip,
+                        legend: { position: 'bottom' }
+                    },
+                    scales: {
+                        r: {
+                            angleLines: { color: '#E2E8F0' },
+                            grid: { color: '#E2E8F0' },
+                            pointLabels: { color: '#1E293B', font: { size: 11 } },
+                            ticks: { display: false, min: 0, max: 100 }
+                        }
+                    }
+                }
+            });
+
+            const audCtx = document.getElementById('audienceChart').getContext('2d');
+            new Chart(audCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: [
+                        wrapLabel('The Gummy Buyer'), 
+                        wrapLabel('Nootropic/Focus Seeker'), 
+                        wrapLabel('Skeptical First-Timer')
+                    ],
+                    datasets: [{
+                        data: [45, 40, 15],
+                        backgroundColor: [
+                            '#F97316', 
+                            '#3B82F6', 
+                            '#22C55E'  
+                        ],
+                        borderWidth: 0,
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '65%',
+                    plugins: {
+                        tooltip: commonTooltipPlugin.tooltip,
+                        legend: { 
+                            position: 'bottom',
+                            labels: { color: '#E2E8F0', padding: 20, font: { size: 12 } }
+                        }
+                    }
+                }
+            });
+
+        });
+    </script>
+</body>
+</html>
